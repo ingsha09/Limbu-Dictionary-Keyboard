@@ -14,6 +14,11 @@
 -dontwarn okio.**
 -keep class okhttp3.** { *; }
 
+# Preserve Kotlin Coroutines and internal JVM metadata (Fixes SpillingKt missing class error)
+-keep class kotlin.coroutines.jvm.internal.** { *; }
+-keep class kotlin.jvm.internal.** { *; }
+-dontwarn kotlin.coroutines.jvm.internal.**
+
 # Keep standard views, layouts, and dynamic custom view parameters
 -keep public class * extends android.view.View {
     public <init>(android.content.Context);
