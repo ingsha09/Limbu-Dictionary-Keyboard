@@ -19,13 +19,16 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      # Forces Gradle version 8.10.2 to maintain compatibility with AGP 8.x
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.10.2'
 
-      - name: Ensure Gradle Wrapper Exists
+      - name: Ensure Compatible Gradle Wrapper Exists
         run: |
           if [ ! -f ./gradlew ]; then
-            gradle wrapper
+            gradle wrapper --gradle-version 8.10.2
           fi
           chmod +x gradlew
 
