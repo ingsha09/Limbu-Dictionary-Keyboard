@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">Limbu Dictionary &amp; Keyboard</string>
+    <string name="subtype_limbu">Limbu</string>
+</resources>

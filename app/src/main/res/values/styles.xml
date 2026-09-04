@@ -1,0 +1,48 @@
+<resources>
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
+        <item name="android:colorControlNormal">@color/colorControlNormal</item>
+
+        <!-- System bar background colors -->
+        <item name="android:statusBarColor">#FCFDFE</item>
+        <item name="android:navigationBarColor">#FCFDFE</item>
+
+        <!-- Keep system icons dark/visible against light background -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="FullScreen" parent="@android:style/Theme.Material.Light.NoActionBar.Fullscreen">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
+        <item name="android:colorControlNormal">@color/colorControlNormal</item>
+    </style>
+
+    <style name="NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
+        <item name="android:colorControlNormal">@color/colorControlNormal</item>
+
+        <!-- System bar background colors -->
+        <item name="android:statusBarColor">#FCFDFE</item>
+        <item name="android:navigationBarColor">#FCFDFE</item>
+
+        <!-- Keep system icons dark/visible against light background -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="NoStatusBar" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.DebugActivity" parent="AppTheme">
+    </style>
+</resources>

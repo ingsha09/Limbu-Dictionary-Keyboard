@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="#FCFDFE">
+
+    <!-- App Bar Toolbar -->
+    <LinearLayout
+        android:id="@+id/linear_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FCFDFE"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:id="@+id/text_app_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#1F2328"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/keyboard_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            app:srcCompat="@drawable/ic_keyboard"
+            app:tint="#1F2328"
+            android:scaleType="fitCenter"
+            android:contentDescription="Keyboard Settings"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <ImageView
+            android:id="@+id/favorites"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="12dp"
+            android:padding="4dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/ic_star_outline"
+            app:tint="#1F2328"
+            android:scaleType="fitCenter"
+            android:contentDescription="Bookmarks"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <ImageView
+            android:id="@+id/info_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            app:srcCompat="@drawable/ic_contact_support"
+            app:tint="#1F2328"
+            android:scaleType="fitCenter"
+            android:layout_marginStart="12dp"
+            android:contentDescription="About Info"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </LinearLayout>
+
+    <!-- Search Input Bar -->
+    <LinearLayout
+        android:id="@+id/linear_search_container"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:background="@drawable/bg_search_input">
+
+        <ImageView
+            android:id="@+id/icon_search"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_search"
+            app:tint="#656D76"
+            android:scaleType="fitCenter"
+            android:contentDescription="Search Icon" />
+
+        <EditText
+            android:id="@+id/edittext_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:textColor="#1F2328"
+            android:hint="Search Limbu, Nepali, or English..."
+            android:textColorHint="#8C95A0"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:layout_weight="1"
+            android:background="@null"
+            android:layout_marginStart="10dp" />
+
+        <ImageView
+            android:id="@+id/icon_clear"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="4dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close"
+            app:tint="#656D76"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            android:contentDescription="Clear Text"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </LinearLayout>
+
+    <!-- Content List & Sidebar Container -->
+    <FrameLayout
+        android:id="@+id/frame_layout6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+    android:id="@+id/listview1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:choiceMode="none"
+    android:divider="@null"
+    android:paddingStart="16dp"
+    android:paddingEnd="36dp"
+    android:clipToPadding="false"
+    android:scrollbars="none"
+    android:overScrollMode="never"
+    android:requiresFadingEdge="vertical"
+    android:fadingEdgeLength="32dp"
+    android:cacheColorHint="@android:color/transparent"
+    tools:listitem="@layout/word_item" />
+
+        <LinearLayout
+            android:id="@+id/linear_empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/text_empty_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No matching words found"
+                android:textSize="15sp"
+                android:textColor="#656D76" />
+        </LinearLayout>
+
+        <ScrollView
+    android:id="@+id/scroll_alphabet_index"
+    android:layout_width="28dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="2dp"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:id="@+id/linear_alphabet_index"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+</ScrollView>
+    </FrameLayout>
+</LinearLayout>

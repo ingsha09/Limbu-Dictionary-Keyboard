@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="com.kisolabs.limbudictionary.keyboard.SettingsActivity"
+    android:isDefault="false">
+    <subtype
+        android:label="@string/subtype_limbu"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:imeSubtypeLocale="lif"
+        android:imeSubtypeMode="keyboard" />
+</input-method>

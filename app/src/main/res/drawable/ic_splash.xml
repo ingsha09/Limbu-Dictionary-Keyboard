@@ -1,0 +1,57 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="492dp"
+    android:height="492dp"
+    android:viewportWidth="492"
+    android:viewportHeight="492">
+
+    <!-- Group to offset the origin (-40.6, 188.4) to match crop area -->
+    <group
+        android:translateX="40.6"
+        android:translateY="-188.4">
+
+        <!-- Drop Shadow (Left corners sharp, Right corners rounded with 65.625 radius) -->
+        <group
+            android:scaleX="1.36719"
+            android:scaleY="1.36719">
+            <path
+                android:fillColor="#000000"
+                android:fillAlpha="0.35"
+                android:pathData="M-29.6917,145.82795 L282.3083,145.82795 A48,48 0,0 1,330.3083 193.82795 L330.3083,457.82795 A48,48 0,0 1,282.3083 505.82795 L-29.6917,505.82795 Z" />
+        </group>
+
+        <!-- Main Card Body (Book spine left, Right corners rounded with exact 65.625 radius) -->
+        <group
+            android:scaleX="1.36719"
+            android:scaleY="1.36719">
+            <path
+                android:fillColor="#1e293b"
+                android:strokeColor="#334155"
+                android:strokeWidth="2.9257"
+                android:pathData="M-29.6917,137.82796 L282.3083,137.82796 A48,48 0,0 1,330.3083 185.82796 L330.3083,449.82796 A48,48 0,0 1,282.3083 497.82796 L-29.6917,497.82796 Z" />
+        </group>
+
+        <!-- Slate Horizontal Line -->
+        <path
+            android:strokeColor="#475569"
+            android:strokeWidth="4"
+            android:strokeLineCap="round"
+            android:pathData="M57.84375,193.90621 H353.15625" />
+
+        <!-- Top Right Blue Fold -->
+        <path
+            android:fillColor="#3b82f6"
+            android:pathData="M314.875,188.43746 h71.09375 c36.23047,0 65.625,29.39453 65.625,65.625 v71.09375 l-60.15625,-54.6875 z" />
+
+        <!-- Top Right Blue Overlay -->
+        <path
+            android:fillColor="#2563eb"
+            android:fillAlpha="0.6"
+            android:pathData="M391.4375,270.46871 h60.15625 l-60.15625,-60.15625 z" />
+
+        <!-- Precise Letter Path (ᤀ Glyph Outlines) -->
+        <path
+            android:fillColor="#ffffff"
+            android:pathData="M76.86483,569.0802 v0 l-4.00594,-8.45698 l104.15443,-113.94673 h-85.46004 l92.13661,-103.70933 h-102.37401 l11.12761,-32.04752 h245.69763 v241.24658 l-33.38283,15.13355 v0 c-11.27598,-11.27598 -24.48074,-18.76857 -39.61429,-22.47777 v0 v0 c-15.13355,-3.7092 -31.45404,-5.56381 -48.96148,-5.56381 v0 v0 c-24.33237,0 -48.29383,3.18991 -71.88436,9.56974 v0 v0 c-23.59053,6.37983 -46.06831,13.13058 -67.43332,20.25225 M302.53276,527.68549 v0 v-184.71833 h-89.46598 l-73.44223,80.5639 h87.24046 l-94.80724,103.70933 v0 c13.0564,-6.82493 27.59647,-11.86945 43.62023,-15.13355 v0 v0 c16.02376,-3.2641 30.86057,-4.89615 44.51044,-4.89615 v0 v0 c17.50744,0 33.5312,2.00297 48.07128,6.00891 v0 v0 c14.54008,4.00594 25.96442,8.8279 34.27304,14.46589 z" />
+
+    </group>
+</vector>
