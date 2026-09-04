@@ -19,7 +19,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Forces Gradle version 8.13 for compatibility with AGP 8.13.0
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
@@ -35,10 +34,19 @@ jobs:
       - name: Build Unsigned Release APK and AAB
         run: ./gradlew assembleRelease bundleRelease
 
-      - name: Sign Release Artifacts
+      - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: app/build/outputs
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Sign AAB
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
