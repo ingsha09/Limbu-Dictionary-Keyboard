@@ -41,45 +41,31 @@ jobs:
           fi
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
 
-      - name: Build Release APK and AAB
-        run: ./gradlew assembleRelease bundleRelease
-
-      - name: Sign APK and AAB Native
+      - name: Decode Keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > release.keystore
+
+      - name: Build and Sign Release APK and AAB
+        env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          # 1. Decode keystore from secret
-          echo "$KEYSTORE_BASE64" | base64 -d > release.keystore
+          ./gradlew assembleRelease bundleRelease
 
-          # 2. Find build-tools path dynamically
-          BUILD_TOOLS_DIR=$(ls -d $ANDROID_HOME/build-tools/* | tail -n 1)
-          echo "Using build-tools from: $BUILD_TOOLS_DIR"
-
-          # 3. Zipalign and sign APK
-          APK_FILE=$(find app/build/outputs/apk/release -name "*.apk" ! -name "*-aligned.apk" | head -n 1)
-          $BUILD_TOOLS_DIR/zipalign -v -p 4 "$APK_FILE" "${APK_FILE%.apk}-aligned.apk"
-          $BUILD_TOOLS_DIR/apksigner sign \
-            --ks release.keystore \
-            --ks-pass pass:"$KEYSTORE_PASSWORD" \
-            --ks-key-alias "$KEY_ALIAS" \
-            --key-pass pass:"$KEY_PASSWORD" \
-            --out app/build/outputs/apk/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.apk \
-            "${APK_FILE%.apk}-aligned.apk"
-
-          # 4. Sign AAB via jarsigner and rename
+      - name: Prepare Output Files
+        run: |
+          APK_FILE=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
           AAB_FILE=$(find app/build/outputs/bundle/release -name "*.aab" | head -n 1)
-          jarsigner -keystore release.keystore \
-            -storepass "$KEYSTORE_PASSWORD" \
-            -keypass "$KEY_PASSWORD" \
-            "$AAB_FILE" "$KEY_ALIAS"
           
+          cp "$APK_FILE" app/build/outputs/apk/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.apk
           cp "$AAB_FILE" app/build/outputs/bundle/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.aab
 
-          # Clean up local keystore artifact
-          rm release.keystore
+      - name: Clean Keystore
+        if: always()
+        run: rm -f release.keystore
 
       - name: Upload Signed APK Artifact
         uses: actions/upload-artifact@v4
