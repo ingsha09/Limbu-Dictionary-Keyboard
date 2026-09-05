@@ -8,7 +8,9 @@ import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.Lifecycle
@@ -31,6 +33,9 @@ class LimbuKeyboardService : InputMethodService(),
 
     private val clipboardHistory = mutableStateListOf<String>()
     private var clipboardManager: ClipboardManager? = null
+
+    // State trigger to clear active word buffer in Compose UI
+    private val resetTrigger = mutableStateOf(0)
 
     private val clipListener = ClipboardManager.OnPrimaryClipChangedListener {
         captureClipboardText()
@@ -60,6 +65,21 @@ class LimbuKeyboardService : InputMethodService(),
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        super.onStartInputView(info, restarting)
+        resetSuggestionsState()
+    }
+
+    override fun onFinishInputView(finishingInput: Boolean) {
+        super.onFinishInputView(finishingInput)
+        resetSuggestionsState()
+    }
+
+    private fun resetSuggestionsState() {
+        // Increment trigger to signal Compose UI to clear current query/suggestions
+        resetTrigger.value += 1
     }
 
     private fun captureClipboardText() {
@@ -102,6 +122,7 @@ class LimbuKeyboardService : InputMethodService(),
 
             setContent {
                 LimbuKeyboardScreen(
+                    resetSignal = resetTrigger.value,
                     clipboardHistory = clipboardHistory,
                     onInput = { text: String ->
                         try {
@@ -132,7 +153,7 @@ class LimbuKeyboardService : InputMethodService(),
                                         inputConnection.deleteSurroundingTextInCodePoints(1, 0)
                                     } else {
                                         val lastChar = textBefore.last()
-val charLength = if (lastChar.isSurrogate()) 2 else 1
+                                        val charLength = if (lastChar.isSurrogate()) 2 else 1
                                         inputConnection.deleteSurroundingText(charLength, 0)
                                     }
                                 } else {
