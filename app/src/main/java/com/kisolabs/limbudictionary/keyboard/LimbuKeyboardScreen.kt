@@ -93,6 +93,7 @@ fun Modifier.allowUnboundedChildren() = this.layout { measurable, constraints ->
 
 @Composable
 fun LimbuKeyboardScreen(
+    resetSignal: Int = 0,
     clipboardHistory: List<String>,
     onInput: (String) -> Unit, 
     onBackspace: () -> Unit,
@@ -150,6 +151,13 @@ fun LimbuKeyboardScreen(
     var activePreview by remember { mutableStateOf<ActivePreview?>(null) }
     var activeAltKey by remember { mutableStateOf<Pair<String, Offset>?>(null) }
 
+    // Clear state when service notifies open/close or field change
+    LaunchedEffect(resetSignal) {
+        currentWord = ""
+        activePreview = null
+        activeAltKey = null
+    }
+
     LaunchedEffect(activeAltKey) {
         if (activeAltKey != null) {
             delay(3000)
@@ -168,7 +176,6 @@ fun LimbuKeyboardScreen(
         onInput(text)
         updateWordState()
         activeAltKey = null
-        // Shift state persists until toggled off manually
     }
 
     val handleBackspace = {
@@ -373,7 +380,6 @@ fun LimbuKeyboardScreen(
                                         mode = if (mode == KeyboardMode.ALT) KeyboardMode.DEFAULT else KeyboardMode.ALT
                                     }
 
-                                    // Spacebar using crisp surface background matching Gboard
                                     TextActionButton(
                                         label = "Space",
                                         isSpacebar = true,
