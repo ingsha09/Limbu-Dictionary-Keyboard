@@ -10,11 +10,20 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"/></a>
+  &nbsp;&nbsp;
   <a href="https://developer.android.com"><img src="https://img.shields.io/badge/Platform-Android-green.svg" alt="Platform"/></a>
+  &nbsp;&nbsp;
   <a href="https://github.com"><img src="https://img.shields.io/badge/Language-Java%20%7C%20Kotlin-orange.svg" alt="Language"/></a>
 </p>
 
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.kisolabs.limbudictionary">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="200"/>
+  </a>
+</p>
+
 ---
+
 ## 📱 App Screenshots
 
 <div align="center">
