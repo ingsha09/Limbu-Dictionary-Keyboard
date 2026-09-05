@@ -17,13 +17,17 @@
 ---
 ## 📱 App Screenshots
 
-<p align="center">
-  <img src="docs/screenshots/screenshot_main.png" width="200" alt="Main Dashboard"/>
-  <img src="docs/screenshots/screenshot_dictionary.png" width="200" alt="Trilingual Dictionary Search"/>
-  <img src="docs/screenshots/screenshot_keyboard.png" width="200" alt="Native Sirijanga Keyboard"/>
-  <img src="docs/screenshots/screenshot_theme.png" width="200" alt="Dark/Light Theme"/>
-  <img src="docs/screenshots/screenshot_bookmarks.png" width="200" alt="Offline Bookmarks"/>
-</p>
+<div align="center">
+  <table>
+    <tr>
+      <td width="20%"><img src="docs/screenshots/screenshot_main.png" alt="Main Dashboard" style="max-width:100%; height:auto;"></td>
+      <td width="20%"><img src="docs/screenshots/screenshot_dictionary.png" alt="Trilingual Dictionary Search" style="max-width:100%; height:auto;"></td>
+      <td width="20%"><img src="docs/screenshots/screenshot_keyboard.png" alt="Native Sirijanga Keyboard" style="max-width:100%; height:auto;"></td>
+      <td width="20%"><img src="docs/screenshots/screenshot_theme.png" alt="Dark/Light Theme" style="max-width:100%; height:auto;"></td>
+      <td width="20%"><img src="docs/screenshots/screenshot_bookmarks.png" alt="Offline Bookmarks" style="max-width:100%; height:auto;"></td>
+    </tr>
+  </table>
+</div>
 
 ---
 
