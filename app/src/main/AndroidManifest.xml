@@ -1,9 +1,13 @@
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	package="com.kisolabs.limbudictionary">
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+	<!-- Explicitly strip Advertising ID permission merged from external libraries -->
+	<uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
 
 	<application
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -28,36 +32,35 @@
 		</service>
 
 		<!-- Keyboard Settings Activity -->
-<activity
-    android:name=".keyboard.SettingsActivity"
-    android:label="Keyboard Settings"
-    android:exported="false"
-    android:windowSoftInputMode="adjustResize"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+		<activity
+			android:name=".keyboard.SettingsActivity"
+			android:label="Keyboard Settings"
+			android:exported="false"
+			android:windowSoftInputMode="adjustResize"
+			android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-<!-- Main Activity (Auto-rotate enabled) -->
-<!-- Main Activity (Respects system auto-rotate setting) -->
-<activity
-    android:name=".MainActivity"
-    android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-    android:hardwareAccelerated="true"
-    android:supportsPictureInPicture="true"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+		<!-- Main Activity (Respects system auto-rotate setting) -->
+		<activity
+			android:name=".MainActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-<!-- Splash Activity (Kept in portrait to avoid orientation jump on start) -->
-<activity
-    android:name=".SplashActivity"
-    android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-    android:hardwareAccelerated="true"
-    android:supportsPictureInPicture="true"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-    android:screenOrientation="portrait"
-    android:exported="true">
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-</activity>
+		<!-- Splash Activity (Kept in portrait to avoid orientation jump on start) -->
+		<activity
+			android:name=".SplashActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+			android:screenOrientation="portrait"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 
 		<activity
 			android:name=".DebugActivity"
