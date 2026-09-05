@@ -36,13 +36,13 @@
     android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
 <!-- Main Activity (Auto-rotate enabled) -->
+<!-- Main Activity (Respects system auto-rotate setting) -->
 <activity
     android:name=".MainActivity"
     android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
     android:hardwareAccelerated="true"
     android:supportsPictureInPicture="true"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-    android:screenOrientation="fullSensor" />
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
 <!-- Splash Activity (Kept in portrait to avoid orientation jump on start) -->
 <activity
