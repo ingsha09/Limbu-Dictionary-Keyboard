@@ -16,6 +16,18 @@ android {
         versionName = "1.6"
     }
 
+    signingConfigs {
+        create("release") {
+            val keyStoreFile = file("${project.rootDir}/release.keystore")
+            if (keyStoreFile.exists()) {
+                storeFile = keyStoreFile
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
@@ -24,7 +36,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            val keyStoreFile = file("${project.rootDir}/release.keystore")
+            if (keyStoreFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         getByName("debug") {
             isMinifyEnabled = false
