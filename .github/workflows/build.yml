@@ -1,9 +1,10 @@
 name: Build Signed Release APK and AAB
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -31,6 +32,15 @@ jobs:
           fi
           chmod +x gradlew
 
+      - name: Extract Version Name from Gradle
+        id: get_version
+        run: |
+          VERSION_NAME=$(./gradlew properties -q | grep "^versionName:" | awk '{print $2}')
+          if [ -z "$VERSION_NAME" ] || [ "$VERSION_NAME" = "null" ]; then
+            VERSION_NAME="1.6"
+          fi
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+
       - name: Build Release APK and AAB
         run: ./gradlew assembleRelease bundleRelease
 
@@ -56,27 +66,42 @@ jobs:
             --ks-pass pass:"$KEYSTORE_PASSWORD" \
             --ks-key-alias "$KEY_ALIAS" \
             --key-pass pass:"$KEY_PASSWORD" \
-            --out app/build/outputs/apk/release/app-release-signed.apk \
+            --out app/build/outputs/apk/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.apk \
             "${APK_FILE%.apk}-aligned.apk"
 
-          # 4. Sign AAB via jarsigner
+          # 4. Sign AAB via jarsigner and rename
           AAB_FILE=$(find app/build/outputs/bundle/release -name "*.aab" | head -n 1)
           jarsigner -keystore release.keystore \
             -storepass "$KEYSTORE_PASSWORD" \
             -keypass "$KEY_PASSWORD" \
             "$AAB_FILE" "$KEY_ALIAS"
+          
+          cp "$AAB_FILE" app/build/outputs/bundle/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.aab
 
           # Clean up local keystore artifact
           rm release.keystore
 
-      - name: Upload Signed APK
+      - name: Upload Signed APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
-          path: app/build/outputs/apk/release/app-release-signed.apk
+          name: Limbu-Dictionary-Keyboard-APK-v${{ env.VERSION_NAME }}
+          path: app/build/outputs/apk/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.apk
 
-      - name: Upload Signed AAB
+      - name: Upload Signed AAB Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-aab
-          path: app/build/outputs/bundle/release/*.aab
+          name: Limbu-Dictionary-Keyboard-AAB-v${{ env.VERSION_NAME }}
+          path: app/build/outputs/bundle/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.aab
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.VERSION_NAME }}.${{ github.run_number }}
+          name: Limbu Dictionary Keyboard v${{ env.VERSION_NAME }}
+          draft: false
+          prerelease: false
+          files: |
+            app/build/outputs/apk/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.apk
+            app/build/outputs/bundle/release/Limbu_Dictionary_Keyboard_v${{ env.VERSION_NAME }}.aab
