@@ -15,17 +15,14 @@
 </p>
 
 ---
-
 ## 📱 App Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/screenshot_dictionary.png" width="220" alt="Trilingual Dictionary Search"/>
-  &nbsp;&nbsp;
-  <img src="docs/screenshots/screenshot_keyboard.png" width="220" alt="Native Sirijanga Keyboard"/>
-  &nbsp;&nbsp;
-  <img src="docs/screenshots/screenshot_bookmarks.png" width="220" alt="Offline Bookmarks"/>
-  &nbsp;&nbsp;
-  <img src="docs/screenshots/screenshot_about.png" width="220" alt="Verified Business Info"/>
+  <img src="docs/screenshots/screenshot_main.png" width="200" alt="Main Dashboard"/>
+  <img src="docs/screenshots/screenshot_dictionary.png" width="200" alt="Trilingual Dictionary Search"/>
+  <img src="docs/screenshots/screenshot_keyboard.png" width="200" alt="Native Sirijanga Keyboard"/>
+  <img src="docs/screenshots/screenshot_theme.png" width="200" alt="Dark/Light Theme"/>
+  <img src="docs/screenshots/screenshot_bookmarks.png" width="200" alt="Offline Bookmarks"/>
 </p>
 
 ---
