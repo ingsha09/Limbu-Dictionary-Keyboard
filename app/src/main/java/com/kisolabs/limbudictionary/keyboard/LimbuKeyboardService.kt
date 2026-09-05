@@ -50,6 +50,9 @@ class LimbuKeyboardService : InputMethodService(),
         mSavedStateRegistryController.performRestore(null)
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
 
+        // Initialize dictionary helper
+        LimbuDictionaryHelper.load(this)
+
         try {
             clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             clipboardManager?.addPrimaryClipChangedListener(clipListener)
@@ -73,7 +76,6 @@ class LimbuKeyboardService : InputMethodService(),
                 }
             }
         } catch (e: Exception) {
-            // Catches potential SecurityExceptions or NullPointerExceptions from ClipboardManager
             e.printStackTrace()
         }
     }
@@ -104,6 +106,15 @@ class LimbuKeyboardService : InputMethodService(),
                     onInput = { text: String ->
                         try {
                             currentInputConnection?.commitText(text, 1)
+
+                            // Automatically learn completed words typed via space or punctuation
+                            if (text == " " || text == "\n" || text == "।" || text == ".") {
+                                val textBefore = currentInputConnection?.getTextBeforeCursor(30, 0)?.toString() ?: ""
+                                val lastWord = textBefore.trim().takeLastWhile { !it.isWhitespace() }
+                                if (lastWord.isNotBlank()) {
+                                    LimbuDictionaryHelper.recordWordSelection(this@LimbuKeyboardService, lastWord)
+                                }
+                            }
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -121,11 +132,10 @@ class LimbuKeyboardService : InputMethodService(),
                                         inputConnection.deleteSurroundingTextInCodePoints(1, 0)
                                     } else {
                                         val lastChar = textBefore.last()
-                                        val charLength = if (Character.isSurrogate(lastChar)) 2 else 1
+val charLength = if (lastChar.isSurrogate()) 2 else 1
                                         inputConnection.deleteSurroundingText(charLength, 0)
                                     }
                                 } else {
-                                    // Fallback when buffer is empty to avoid Compose range errors
                                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
                                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
                                 }
@@ -136,6 +146,13 @@ class LimbuKeyboardService : InputMethodService(),
                     },
                     onEnter = {
                         try {
+                            // Learn word before submitting enter
+                            val textBefore = currentInputConnection?.getTextBeforeCursor(30, 0)?.toString() ?: ""
+                            val lastWord = textBefore.trim().takeLastWhile { !it.isWhitespace() }
+                            if (lastWord.isNotBlank()) {
+                                LimbuDictionaryHelper.recordWordSelection(this@LimbuKeyboardService, lastWord)
+                            }
+
                             currentInputConnection?.sendKeyEvent(
                                 KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER)
                             )
@@ -161,6 +178,8 @@ class LimbuKeyboardService : InputMethodService(),
                                 inputConnection.deleteSurroundingText(currentLen, 0)
                             }
                             inputConnection.commitText(newWord, 1)
+
+                            LimbuDictionaryHelper.recordWordSelection(this@LimbuKeyboardService, newWord)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
