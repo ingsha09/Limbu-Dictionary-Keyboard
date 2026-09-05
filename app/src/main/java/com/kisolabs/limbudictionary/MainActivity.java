@@ -204,47 +204,75 @@ public class MainActivity extends AppCompatActivity {
         }
 
         info_button.setOnClickListener(v -> {
-            AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
+    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
 
-            ScrollView scrollView = new ScrollView(MainActivity.this);
-            LinearLayout mainContainer = new LinearLayout(MainActivity.this);
-            mainContainer.setOrientation(LinearLayout.VERTICAL);
-            mainContainer.setPadding(48, 48, 48, 36);
+    ScrollView scrollView = new ScrollView(MainActivity.this);
+    LinearLayout mainContainer = new LinearLayout(MainActivity.this);
+    mainContainer.setOrientation(LinearLayout.VERTICAL);
+    mainContainer.setPadding(48, 48, 48, 36);
 
-            GradientDrawable dialogBg = new GradientDrawable();
-            dialogBg.setColor(Color.parseColor("#FFFFFF"));
-            dialogBg.setCornerRadius(16f);
-            mainContainer.setBackground(dialogBg);
+    GradientDrawable dialogBg = new GradientDrawable();
+    dialogBg.setColor(Color.parseColor("#FFFFFF"));
+    dialogBg.setCornerRadius(16f);
+    mainContainer.setBackground(dialogBg);
 
-            TextView titleTv = new TextView(MainActivity.this);
-            titleTv.setText("Limbu Dictionary & Keyboard");
-            titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
-            titleTv.setTypeface(appFont, Typeface.BOLD);
-            titleTv.setTextColor(Color.parseColor("#1F2328"));
-            mainContainer.addView(titleTv);
+    TextView titleTv = new TextView(MainActivity.this);
+    titleTv.setText("Limbu Dictionary & Keyboard");
+    titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
+    titleTv.setTypeface(appFont, Typeface.BOLD);
+    titleTv.setTextColor(Color.parseColor("#1F2328"));
+    mainContainer.addView(titleTv);
 
-            int totalWords = (word_list != null) ? word_list.size() : 0;
+    int totalWords = (word_list != null) ? word_list.size() : 0;
 
-            String versionName = "1.0";
-            try {
-                versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    String versionName = "1.0";
+    try {
+        versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 
-            TextView subtitleTv = new TextView(MainActivity.this);
-            subtitleTv.setText("Version " + versionName + " • " + totalWords + " Words Loaded");
-            subtitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
-            subtitleTv.setTextColor(Color.parseColor("#656D76"));
-            subtitleTv.setPadding(0, 4, 0, 16);
-            mainContainer.addView(subtitleTv);
+    TextView subtitleTv = new TextView(MainActivity.this);
+    subtitleTv.setText("Version " + versionName + " • " + totalWords + " Words Loaded");
+    subtitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+    subtitleTv.setTextColor(Color.parseColor("#656D76"));
+    subtitleTv.setPadding(0, 4, 0, 16);
+    mainContainer.addView(subtitleTv);
 
-            TextView descTv = new TextView(MainActivity.this);
-            descTv.setText("A modern dictionary & input keyboard app dedicated to preserving and promoting the Limbu (Yakthung) language and Sirijanga script.\n\nNow includes an integrated native Limbu Keyboard IME with Sirijanga script support, haptic feedback, and dynamic themes.\n\nDeveloped by Ingsha Hang Subba (Kiso Labs).");
-            descTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
-            descTv.setTextColor(Color.parseColor("#1F2328"));
-            descTv.setPadding(0, 0, 0, 20);
-            mainContainer.addView(descTv);
+    // Updated Description Text (Reflecting integrated native Sirijanga Keyboard)
+    TextView descTv = new TextView(MainActivity.this);
+    descTv.setText("A modern dictionary & input keyboard app dedicated to preserving and promoting the Limbu (Yakthung) language and Sirijanga script.\n\nIntegrates a native Sirijanga script keyboard IME with haptic feedback, customizable key sounds, and dynamic themes.");
+    descTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
+    descTv.setTextColor(Color.parseColor("#1F2328"));
+    descTv.setPadding(0, 0, 0, 12);
+    mainContainer.addView(descTv);
+
+    // Clickable Business Developer Row
+    LinearLayout businessRow = new LinearLayout(MainActivity.this);
+    businessRow.setOrientation(LinearLayout.VERTICAL);
+    businessRow.setPadding(0, 4, 0, 20);
+
+    TextView devTv = new TextView(MainActivity.this);
+    devTv.setText("Developed by Ingsha Hang Subba");
+    devTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
+    devTv.setTextColor(Color.parseColor("#1F2328"));
+
+    TextView msmeBadgeTv = new TextView(MainActivity.this);
+    msmeBadgeTv.setText("Kiso Labs (Registered MSME Enterprise)  →");
+    msmeBadgeTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+    msmeBadgeTv.setTypeface(appFont, Typeface.BOLD);
+    msmeBadgeTv.setTextColor(Color.parseColor("#0969DA")); // Interactive link color
+    msmeBadgeTv.setPadding(0, 4, 0, 0);
+
+    businessRow.addView(devTv);
+    businessRow.addView(msmeBadgeTv);
+
+    businessRow.setOnClickListener(v1 -> {
+        dialog.dismiss(); // Close main about dialog
+        showBusinessDetailsDialog(); // Open MSME Certificate Dialog
+    });
+
+    mainContainer.addView(businessRow);
 
             LinearLayout supportRow = new LinearLayout(MainActivity.this);
             supportRow.setOrientation(LinearLayout.HORIZONTAL);
@@ -918,6 +946,95 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+private void showBusinessDetailsDialog() {
+    AlertDialog businessDialog = new AlertDialog.Builder(MainActivity.this).create();
+
+    ScrollView scrollView = new ScrollView(MainActivity.this);
+    LinearLayout container = new LinearLayout(MainActivity.this);
+    container.setOrientation(LinearLayout.VERTICAL);
+    container.setPadding(48, 48, 48, 36);
+
+    GradientDrawable dialogBg = new GradientDrawable();
+    dialogBg.setColor(Color.parseColor("#FFFFFF"));
+    dialogBg.setCornerRadius(16f);
+    container.setBackground(dialogBg);
+
+    // Business Name & Verification Header
+    TextView titleTv = new TextView(MainActivity.this);
+    titleTv.setText("Kiso Labs");
+    titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
+    titleTv.setTypeface(appFont, Typeface.BOLD);
+    titleTv.setTextColor(Color.parseColor("#1F2328"));
+    container.addView(titleTv);
+
+    TextView subtitleTv = new TextView(MainActivity.this);
+    subtitleTv.setText("Registered Micro-Enterprise • Govt. of India");
+    subtitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+    subtitleTv.setTextColor(Color.parseColor("#2E7D32")); // Green accent for verified feel
+    subtitleTv.setTypeface(appFont, Typeface.BOLD);
+    subtitleTv.setPadding(0, 4, 0, 16);
+    container.addView(subtitleTv);
+
+    // Business Details List
+    String businessDetails = 
+        "• Udyam Registration: UDYAM-SK-04-0002800\n" +
+        "• Activity: Software Development & Publishing (NIC 6201)\n" +
+        "• Location: Gyalshing, Sikkim\n" +
+        "• Enterprise Type: Micro Services Unit";
+
+    TextView detailsTv = new TextView(MainActivity.this);
+    detailsTv.setText(businessDetails);
+    detailsTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12.5f);
+    detailsTv.setTextColor(Color.parseColor("#1F2328"));
+    detailsTv.setLineSpacing(0, 1.3f);
+    detailsTv.setPadding(0, 0, 0, 20);
+    container.addView(detailsTv);
+
+    // Certificate Image Preview Container
+    ImageView certificateImg = new ImageView(MainActivity.this);
+    
+    // NOTE: Make sure you add your sanitized certificate image (with phone/email blurred) 
+    // to your app's 'res/drawable' folder named 'udyam_certificate'
+    int certResId = getResources().getIdentifier("udyam_certificate", "drawable", getPackageName());
+    if (certResId != 0) {
+        certificateImg.setImageResource(certResId);
+        certificateImg.setAdjustViewBounds(true);
+        certificateImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        
+        GradientDrawable imgBorder = new GradientDrawable();
+        imgBorder.setCornerRadius(12f);
+        imgBorder.setStroke(2, Color.parseColor("#E1E4E8"));
+        certificateImg.setBackground(imgBorder);
+        certificateImg.setClipToOutline(true);
+
+        container.addView(certificateImg);
+    }
+
+    // Close Button
+    TextView closeBtn = new TextView(MainActivity.this);
+    closeBtn.setText("CLOSE");
+    closeBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
+    closeBtn.setTypeface(appFont, Typeface.BOLD);
+    closeBtn.setTextColor(Color.parseColor("#1F2328"));
+    closeBtn.setGravity(Gravity.END);
+    closeBtn.setPadding(0, 24, 12, 0);
+    closeBtn.setOnClickListener(v -> businessDialog.dismiss());
+    container.addView(closeBtn);
+
+    scrollView.addView(container);
+    businessDialog.setView(scrollView);
+    businessDialog.show();
+
+// Ensure dialog content respects system bars on Android 15+
+if (businessDialog.getWindow() != null) {
+    View decorView = businessDialog.getWindow().getDecorView();
+    ViewCompat.setOnApplyWindowInsetsListener(decorView, (v, insets) -> {
+        Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+        v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+        return insets;
+    });
+}
+}
     public class Listview1Adapter extends BaseAdapter {
 
         ArrayList<HashMap<String, Object>> _data;
