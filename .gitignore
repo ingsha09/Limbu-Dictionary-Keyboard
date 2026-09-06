@@ -6,3 +6,12 @@ local.properties
 .DS_Store
 captures/
 .cxx/
+.platform/
+*.apk
+*.aab
+*.jks
+*.keystore
+# CodeAssist local caches & module settings
+module.toml
+.deps-reconciled
+.platform/caches/
